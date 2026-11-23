@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  touch-action: none; /* Mencegah browser HP scroll/zoom halaman saat sentuh objek AR */
+}
+
+/* Bar Atas */
+.top-bar {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.badge {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Bingkai Pemandu Kamera */
+.scanner-frame {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 240px;
+  height: 240px;
+  z-index: 15;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.scanner-frame.hidden {
+  opacity: 0;
+}
+
+.corner {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-color: rgba(255, 255, 255, 0.85);
+  border-style: solid;
+}
+
+.top-left { top: 0; left: 0; border-width: 4px 0 0 4px; border-top-left-radius: 12px; }
+.top-right { top: 0; right: 0; border-width: 4px 4px 0 0; border-top-right-radius: 12px; }
+.bottom-left { bottom: 0; left: 0; border-width: 0 0 4px 4px; border-bottom-left-radius: 12px; }
+.bottom-right { bottom: 0; right: 0; border-width: 0 4px 4px 0; border-bottom-right-radius: 12px; }
+
+/* Kartu Penjelasan Tugu di Bawah */
+.info-drawer {
+  position: fixed;
+  bottom: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 460px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 30;
+  transition: bottom 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  touch-action: auto;
+}
+
+.info-drawer.active {
+  bottom: 20px;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tugu-tag {
+  background: #2563eb;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.btn-close {
+  background: #e2e8f0;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  color: #334155;
+  cursor: pointer;
+}
+
+.info-drawer h2 {
+  font-size: 19px;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+
+.tugu-location {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.tugu-desc-box {
+  max-height: 110px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+
+.tugu-desc-box p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.gesture-tip {
+  font-size: 11px;
+  color: #64748b;
+  text-align: center;
+  padding-top: 8px;
+  border-top: 1px solid #e2e8f0;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>WebAR Eksplorasi 5 Tugu</title>
+
+  <!-- Library A-Frame & MindAR -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header & Status Panduan -->
+  <header class="top-bar">
+    <div class="badge" id="statusBadge">Arahkan kamera ke Marker Tugu</div>
+  </header>
+
+  <!-- Kotak Pemandu Scan di Tengah Layar -->
+  <div class="scanner-frame" id="scannerFrame">
+    <div class="corner top-left"></div>
+    <div class="corner top-right"></div>
+    <div class="corner bottom-left"></div>
+    <div class="corner bottom-right"></div>
+  </div>
+
+  <!-- Panel Penjelasan Tugu (Muncul Otomatis Saat Terdeteksi) -->
+  <section class="info-drawer" id="infoDrawer">
+    <div class="drawer-header">
+      <span class="tugu-tag" id="tuguTag">TUGU 01</span>
+      <button class="btn-close" id="btnClose" title="Sembunyikan">&times;</button>
+    </div>
+    <h2 id="tuguTitle">Nama Tugu</h2>
+    <p class="tugu-location" id="tuguLocation">Lokasi Tugu</p>
+    <div class="tugu-desc-box">
+      <p id="tuguDesc">Penjelasan singkat mengenai sejarah dan makna tugu akan tampil di sini.</p>
+    </div>
+    <div class="gesture-tip">Geser 1 jari untuk memutar • Cubit 2 jari untuk zoom</div>
+  </section>
+
+  <!-- Scene WebAR -->
+  <a-scene
+    mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 1; uiScanning: no;"
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false">
+
+    <!-- Preload 5 Aset 3D GLB (timeout 1 detik agar kamera langsung aktif) -->
+    <a-assets timeout="1000">
+      <a-asset-item id="model-0" src="./assets/Tugu-Koperasi.glb"></a-asset-item>
+      <a-asset-item id="model-1" src="./assets/Tugu-Simpang-lima.glb"></a-asset-item>
+      <a-asset-item id="model-2" src="./assets/Tugu-Asmaul-Husna.glb"></a-asset-item>
+      <a-asset-item id="model-3" src="./assets/Tugu-Kelom-Geulis-Gobras.glb"></a-asset-item>
+      <a-asset-item id="model-4" src="./assets/Tugu-LamAlif.glb"></a-asset-item>
+    </a-assets>
+
+    <!-- Pencahayaan Tambahan agar 3D Jelas -->
+    <a-light type="ambient" color="#ffffff" intensity="0.9"></a-light>
+    <a-light type="directional" color="#ffffff" intensity="0.8" position="1 3 2"></a-light>
+
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <!-- Target Marker 1 (Index 0) -->
+    <a-entity id="target-0" mindar-image-target="targetIndex: 0">
+      <a-entity id="wrapper-0" scale="0.4 0.4 0.4" rotation="0 0 0">
+        <a-gltf-model src="#model-0" position="0 0 0" rotation="90 0 0"></a-gltf-model>
+      </a-entity>
+    </a-entity>
+
+    <!-- Target Marker 2 (Index 1) -->
+    <a-entity id="target-1" mindar-image-target="targetIndex: 1">
+      <a-entity id="wrapper-1" scale="0.4 0.4 0.4" rotation="0 0 0">
+        <a-gltf-model src="#model-1" position="0 0 0" rotation="90 0 0"></a-gltf-model>
+      </a-entity>
+    </a-entity>
+
+    <!-- Target Marker 3 (Index 2) -->
+    <a-entity id="target-2" mindar-image-target="targetIndex: 2">
+      <a-entity id="wrapper-2" scale="0.4 0.4 0.4" rotation="0 0 0">
+        <a-gltf-model src="#model-2" position="0 0 0" rotation="90 0 0"></a-gltf-model>
+      </a-entity>
+    </a-entity>
+
+    <!-- Target Marker 4 (Index 3) -->
+    <a-entity id="target-3" mindar-image-target="targetIndex: 3">
+      <a-entity id="wrapper-3" scale="0.4 0.4 0.4" rotation="0 0 0">
+        <a-gltf-model src="#model-3" position="0 0 0" rotation="90 0 0"></a-gltf-model>
+      </a-entity>
+    </a-entity>
+
+    <!-- Target Marker 5 (Index 4) -->
+    <a-entity id="target-4" mindar-image-target="targetIndex: 4">
+      <a-entity id="wrapper-4" scale="0.4 0.4 0.4" rotation="0 0 0">
+        <a-gltf-model src="#model-4" position="0 0 0" rotation="90 0 0"></a-gltf-model>
+      </a-entity>
+    </a-entity>
+
+  </a-scene>
+
+  <script src="script.js"></script>
+</body>
+</html>
