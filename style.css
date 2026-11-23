@@ -2,70 +2,147 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
   overflow: hidden;
   width: 100vw;
   height: 100vh;
-  touch-action: none; /* Mencegah browser HP scroll/zoom halaman saat sentuh objek AR */
+  touch-action: none;
+  user-select: none;
 }
 
-/* Bar Atas */
+.hidden {
+  display: none !important;
+}
+
+/* ==================== BAR STATUS ATAS ==================== */
 .top-bar {
   position: fixed;
-  top: 20px;
+  top: 18px;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: center;
+  padding: 0 16px;
   z-index: 20;
   pointer-events: none;
 }
 
-.badge {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(8px);
-  color: #ffffff;
-  padding: 10px 20px;
+.brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f8fafc;
+  padding: 10px 18px;
   border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
 
-/* Bingkai Pemandu Kamera */
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 10px #f59e0b;
+  animation: pulseDot 1.6s infinite ease-in-out;
+}
+
+.status-dot.detected {
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.6; }
+}
+
+/* ==================== BINGKAI SCANNER & LASER ==================== */
 .scanner-frame {
   position: fixed;
-  top: 45%;
+  top: 44%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 240px;
-  height: 240px;
+  width: 250px;
+  height: 250px;
   z-index: 15;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.scanner-frame.hidden {
+.scanner-frame.fade-out {
   opacity: 0;
+  transform: translate(-50%, -50%) scale(0.92);
 }
 
 .corner {
   position: absolute;
-  width: 32px;
-  height: 32px;
-  border-color: rgba(255, 255, 255, 0.85);
+  width: 34px;
+  height: 34px;
+  border-color: #fbbf24;
   border-style: solid;
+  filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.5));
 }
 
-.top-left { top: 0; left: 0; border-width: 4px 0 0 4px; border-top-left-radius: 12px; }
-.top-right { top: 0; right: 0; border-width: 4px 4px 0 0; border-top-right-radius: 12px; }
-.bottom-left { bottom: 0; left: 0; border-width: 0 0 4px 4px; border-bottom-left-radius: 12px; }
-.bottom-right { bottom: 0; right: 0; border-width: 0 4px 4px 0; border-bottom-right-radius: 12px; }
+.top-left { top: 0; left: 0; border-width: 4px 0 0 4px; border-top-left-radius: 16px; }
+.top-right { top: 0; right: 0; border-width: 4px 4px 0 0; border-top-right-radius: 16px; }
+.bottom-left { bottom: 0; left: 0; border-width: 0 0 4px 4px; border-bottom-left-radius: 16px; }
+.bottom-right { bottom: 0; right: 0; border-width: 0 4px 4px 0; border-bottom-right-radius: 16px; }
 
-/* Kartu Penjelasan Tugu di Bawah */
+.scan-line {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #fbbf24, #ffffff, #fbbf24, transparent);
+  box-shadow: 0 0 12px #fbbf24;
+  animation: scanMove 2.4s infinite ease-in-out;
+}
+
+@keyframes scanMove {
+  0% { top: 12px; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 236px; opacity: 0; }
+}
+
+.scan-caption {
+  position: absolute;
+  bottom: -34px;
+  width: 100%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  font-weight: 500;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* ==================== TOMBOL BUKA ULANG PANEL ==================== */
+.btn-reopen {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  background: rgba(15, 23, 42, 0.9);
+  color: #fff;
+  border: 1px solid rgba(251, 191, 36, 0.5);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  z-index: 25;
+  cursor: pointer;
+}
+
+/* ==================== KARTU PENJELASAN TUGU ==================== */
 .info-drawer {
   position: fixed;
   bottom: -100%;
@@ -73,78 +150,157 @@ body {
   transform: translateX(-50%);
   width: 92%;
   max-width: 460px;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 24px;
+  padding: 12px 20px 18px 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
   z-index: 30;
-  transition: bottom 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: bottom 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   touch-action: auto;
+  color: #f8fafc;
 }
 
 .info-drawer.active {
-  bottom: 20px;
+  bottom: 18px;
+}
+
+.drawer-handle {
+  width: 38px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 99px;
+  margin: 0 auto 12px auto;
 }
 
 .drawer-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.header-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .tugu-tag {
-  background: #2563eb;
-  color: #fff;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #0f172a;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   padding: 4px 10px;
   border-radius: 6px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
 }
 
-.btn-close {
-  background: #e2e8f0;
-  border: none;
-  width: 28px;
-  height: 28px;
+.year-tag {
+  background: rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-icon {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1;
-  color: #334155;
+  color: #f8fafc;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.btn-icon:active {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .info-drawer h2 {
-  font-size: 19px;
-  color: #0f172a;
-  margin-bottom: 2px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+  letter-spacing: -0.2px;
 }
 
 .tugu-location {
-  font-size: 12px;
-  color: #64748b;
+  font-size: 12.5px;
+  color: #94a3b8;
   margin-bottom: 12px;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .tugu-desc-box {
-  max-height: 110px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 12px 14px;
+  max-height: 115px;
   overflow-y: auto;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .tugu-desc-box p {
-  font-size: 14px;
-  line-height: 1.55;
-  color: #334155;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #e2e8f0;
+  text-align: justify;
+}
+
+/* Footer Panel: Tombol Audio & Info Gestur */
+.drawer-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-voice {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  padding: 9px 15px;
+  border-radius: 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.btn-voice:active {
+  transform: scale(0.96);
+}
+
+.btn-voice.speaking {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
 }
 
 .gesture-tip {
   font-size: 11px;
-  color: #64748b;
-  text-align: center;
-  padding-top: 8px;
-  border-top: 1px solid #e2e8f0;
+  color: #94a3b8;
+  font-weight: 500;
 }
